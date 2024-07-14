@@ -1,15 +1,16 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Map from './components/Map'
-import Search from './components/Search'
-import BottomNav from './components/BottomNav'
+import MapPage from './pages/MapPage'
+import SearchPage from './pages/SearchPage'
 
 function App() {
   return (
-    <div className="app">
-      <Map />
-      <Search />
-      <BottomNav />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MapPage />} />
+        <Route path="/search" element={<SearchPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

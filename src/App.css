@@ -1,8 +1,7 @@
 /* 공통 적용 */
 button {
   border: none;
-  padding: 0;
-  background: none;
+  background-repeat: no-repeat;
   cursor: pointer;
 }
 

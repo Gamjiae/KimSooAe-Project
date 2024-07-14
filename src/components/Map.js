@@ -1,11 +1,32 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 const { kakao } = window
 
 function Map() {
+    const [location, setLocation] = useState({ lat: 37.5031571, lng: 126.882408 });
+
+    const options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+    };
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              setLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+              console.log('위치 받기 성공');
+            },
+            () => console.log('위치 받기 실패'),
+            options
+          );
+        }
+      }, []);
+
     useEffect( () => {
         const container = document.getElementById('map');
         const options = {
-            center: new kakao.maps.LatLng(33.450701, 126.570667),
+            center: new kakao.maps.LatLng(location.lat, location.lng),
             level: 3
         }
         const map = new kakao.maps.Map(container, options);
