@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import History from '../components/search/History'
 import SearchBar from '../components/search/SearchBar'
+import Map from '../components/Map'
 
 function SearchPage() {
+  const [keyword, setKeyword] = useState('')
   const [keywords, setKeywords] = useState(
     JSON.parse(localStorage.getItem('keywords') || '[]'),
   )
@@ -33,7 +35,7 @@ function SearchPage() {
 
   return (
     <div>
-      <SearchBar onAddKeyword={handleAddKeyword}></SearchBar>
+      <SearchBar onAddKeyword={handleAddKeyword} keyword={keyword} setKeyword={setKeyword}></SearchBar>
       <History
         keywords={keywords}
         onClearKeywords={handleClearKeywords}

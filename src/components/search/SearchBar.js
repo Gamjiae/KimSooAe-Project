@@ -44,8 +44,8 @@ const Input = styled.input`
   `}
 `;
 
-function SearchBar({ onAddKeyword }) {
-    const [keyword, setKeyword] = useState('')
+function SearchBar({ onAddKeyword, keyword, setKeyword }) {
+    // const [keyword, setKeyword] = useState('')
     const navigate = useNavigate();
 
     const handleKeyword = (e) => setKeyword(e.target.value)
@@ -54,7 +54,6 @@ function SearchBar({ onAddKeyword }) {
       if (keyword && e.keyCode === 13) { // 13은 엔터키
           onAddKeyword(keyword)
           setKeyword('')
-          // useNavigate('/')
       }
     }
 
