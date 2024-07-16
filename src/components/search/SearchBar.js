@@ -51,11 +51,11 @@ function SearchBar({ onAddKeyword }) {
     const handleKeyword = (e) => setKeyword(e.target.value)
     
     const handleEnter = (e) => {
-        if (keyword && e.keyCode === 13) { // 13은 엔터키
-            onAddKeyword(keyword)
-            setKeyword('')
-            navigate('/')
-        }
+      if (keyword && e.keyCode === 13) { // 13은 엔터키
+          onAddKeyword(keyword)
+          setKeyword('')
+          // useNavigate('/')
+      }
     }
 
     const handleClearKeyword = () => setKeyword('')
