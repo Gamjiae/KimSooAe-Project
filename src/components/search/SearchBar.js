@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import back from '../../images/back.png';
 import remove from '../../images/remove.png';
 
@@ -16,7 +16,7 @@ const ArrowIcon = styled(Link)`
   height: 17px;
   background-image: url(${back});
   background-size: cover;
-  margin-right: 16px; /* 아이콘과 입력창 사이의 간격 */
+  margin-right: 16px;
 `;
 
 const RemoveIcon = styled.span`
@@ -25,18 +25,17 @@ const RemoveIcon = styled.span`
   background-image: url(${remove});
   background-size: cover;
   color: transparent;
-  margin-left: 20px; /* 입력창과 제거 아이콘 사이의 간격 */
+  margin-left: 20px;
 `;
 
 const Input = styled.input`
-  flex: 1; /* 남은 공간을 모두 차지하도록 설정 */
+  flex: 1;
   background-color: #fff;
   font-weight: 700;
   font-size: 17px;
   box-sizing: border-box;
   border: none;
   outline: none;
-
   ${({ active }) =>
     active &&
     `
@@ -45,24 +44,17 @@ const Input = styled.input`
 `;
 
 function SearchBar({ onAddKeyword, keyword, setKeyword }) {
-    // const [keyword, setKeyword] = useState('')
-    const navigate = useNavigate();
-
-    const handleKeyword = (e) => setKeyword(e.target.value)
+    const handleKeyword = (e) => setKeyword(e.target.value);
     
     const handleEnter = (e) => {
-      if (keyword && e.keyCode === 13) { // 13은 엔터키
-          onAddKeyword(keyword)
-          setKeyword('')
+      if (keyword && e.keyCode === 13) {
+          onAddKeyword(keyword);
       }
     }
 
-    const handleClearKeyword = () => setKeyword('')
+    const handleClearKeyword = () => setKeyword('');
 
-    const hasKeyword = !!keyword
-    {
-        console.log(!!keyword)
-    }
+    const hasKeyword = !!keyword;
     
     return (
         <Container>

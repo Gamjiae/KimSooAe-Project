@@ -1,15 +1,18 @@
-import Map from '../components/Map'
-import Search from '../components/Search'
-import BottomNav from '../components/BottomNav'
+import Map from '../components/Map';
+import Search from '../components/Search';
+import BottomNav from '../components/BottomNav';
+import { useKeyword } from '../context/KeywordContext';
 
 function MapPage() {
-    return (
-        <div className="app">
-            <Map />
+  const { keyword } = useKeyword();
+
+  return (
+      <div className="app" style={{ position: 'relative', width: '100%', height: '100vh' }}>
+            <Map keyword={keyword} />
             <Search />
             <BottomNav />
-        </div>
-    )
+      </div>
+  );
 }
 
-export default MapPage
+export default MapPage;

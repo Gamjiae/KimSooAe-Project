@@ -1,15 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
+import close from '../../images/close.png'
+import place from '../../images/place.png'
 
-const HistoryContainer = styled.div`
-  padding: 18px;
-`
 const HeaderContainer = styled.div`
   overflow: hidden;
+  padding: 16px;
 `
+
 const Title = styled.span`
-  float: left;
+  left: 16px;
   font-weight: 400;
+  font-size: 15px;
   color: #666;
 `
 const RemoveText = styled.span`
@@ -18,62 +20,70 @@ const RemoveText = styled.span`
 `
 
 const ListContainer = styled.ul`
-  margin: 10px 0;
+  padding: 0px;
 `
 
-//&는 자기 자신을 나타냄
-//즉, 나 자신(li)들에서 마지막 요소 값을 제외한 값에 margin-bottom 속성 지정
+// KeywordContainer에 flex 속성 추가
 const KeywordContainer = styled.li`
+  display: flex;
   overflow: hidden;
-
+  height: 48px;
+  border-bottom: 2px solid #000;
+  
   &:not(:last-child) {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 `
 
+const PlaceIcon = styled.div`
+  width: 23px;
+  height: 25px;
+  margin-left: 13px;
+  background-image: url(${place});
+  background-color: white;
+`
+
 const RemoveButton = styled.button`
-  float: right;
-  color: #0cde8b;
-  border: 1px solid #0cde8b;
-  padding: 3px 5px;
-  border-radius: 15px;
+  margin-left: auto; /* 오른쪽으로 붙임 */
+  margin-right: 13px; /* 버튼과 PlaceIcon 사이 간격 */
+  width: 13px;
+  height: 13px;
+  background-image: url(${close});
+  background-color: white;
 `
 
 const Keyword = styled.span`
-  font-size: 18px;
+  margin-left: 30px; /* 왼쪽 여백 설정 */
+  font-size: 17px;
   font-weight: 400;
+  flex: 1; /* Keyword가 가능한 한 많은 공간 차지하도록 설정 */
 `
 
 function History({ keywords, onRemoveKeyword, onClearKeywords }) {
   console.log('keyword', keywords)
   if (keywords.length === 0) {
-    return <HistoryContainer>최근 검색된 기록이 없습니다.</HistoryContainer>
+    return (<HeaderContainer>최근 검색된 기록이 없습니다.</HeaderContainer>)
   }
   return (
-    <HistoryContainer>
+    <div>
       <HeaderContainer>
-        <Title>최근 검색어</Title>
+        <Title>검색 기록</Title>
         <RemoveText onClick={onClearKeywords}>전체삭제</RemoveText>
       </HeaderContainer>
       <ListContainer>
         {keywords.map(({ id, text }) => {
           return (
             <KeywordContainer key={id}>
+              <PlaceIcon />
               <Keyword>{text}</Keyword>
-              <RemoveButton
-                //눌렸을때 해야하는거라 arrow function을 사용하여 실행
-                //그냥 함수 쓰면은 그려지자마자 바로 실행됨
-                onClick={() => {
+              <RemoveButton onClick={() => {
                   onRemoveKeyword(id)
-                }}
-              >
-                삭제
-              </RemoveButton>
+                }} />
             </KeywordContainer>
           )
         })}
       </ListContainer>
-    </HistoryContainer>
+    </div>
   )
 }
 
