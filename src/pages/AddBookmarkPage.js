@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Top = styled.div`
@@ -96,6 +96,8 @@ function AddBookmarkPage() {
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState('폴더 선택');
 
+    const navigate = useNavigate()
+
     const handleDropdownToggle = () => {
         setDropdownVisible(!dropdownVisible);
     };
@@ -108,9 +110,9 @@ function AddBookmarkPage() {
     return (
         <div>
             <Top>
-                <Link to='/'>취소</Link>
+                <button onClick={() => navigate(-1)}>취소</button>
                 <Title>북마크 추가</Title>
-                <Link to='/'>완료</Link>
+                <button onClick={() => navigate('/bookmark')}>완료</button>
             </Top>
             <Container>
                 <Name>북마크 이름</Name>

@@ -1,22 +1,11 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import location from '../images/location.png';
+import marker from '../images/marker.png'; // marker 이미지 import 추가
 
 const { kakao } = window;
 
-const LocationIcon = styled.button`
-  width: 45px;
-  height: 45px;
-  background-image: url(${location});
-  background-size: cover;
-  background-color: transparent;
-  position: absolute;
-  bottom: 80px;
-  left: 20px;
-  z-index: 3;
-`;
-
-function Map({ keyword }) {
+function Map({ keyword, onPlacesChange, locationIconPosition }) {
   const [location, setLocation] = useState({ lat: 37.5031571, lng: 126.882408 });
   const [markers, setMarkers] = useState([]);
   const [map, setMap] = useState(null);
@@ -26,7 +15,7 @@ function Map({ keyword }) {
     timeout: 5000,
     maximumAge: 0,
   };
-
+  
   // 현재 위치 받아오기
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,10 +46,11 @@ function Map({ keyword }) {
       ps.keywordSearch(keyword, (data, status, pagination) => {
         if (status === kakao.maps.services.Status.OK) {
           displayPlaces(data, mapInstance);
+          onPlacesChange(data); // 검색 결과를 ResultPage로 전달 
         }
       });
     }
-  }, [location, keyword]); // keyword를 의존성 배열에 추가
+  }, [location, keyword]);
 
   // 검색결과 목록, 마커 표출
   const displayPlaces = (places, map) => {
@@ -69,8 +59,9 @@ function Map({ keyword }) {
 
     const newMarkers = places.map((place, index) => {
       const placePosition = new kakao.maps.LatLng(place.y, place.x);
-      const marker = createMarker(placePosition, index, map);
+      const marker = createMarker(placePosition, map);
       bounds.extend(placePosition);
+
       return marker;
     });
 
@@ -79,21 +70,16 @@ function Map({ keyword }) {
   };
 
   // 마커 생성, 지도 위에 마커 표시
-  const createMarker = (position, index, map) => {
-    const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png';
-    const imageSize = new kakao.maps.Size(36, 37);
-    const imgOptions = {
-      spriteSize: new kakao.maps.Size(36, 691),
-      spriteOrigin: new kakao.maps.Point(0, (index * 46) + 10),
-      offset: new kakao.maps.Point(13, 37),
-    };
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
-    const marker = new kakao.maps.Marker({
+  const createMarker = (position, map) => {
+    const imageSrc = marker; // 새로운 마커 이미지 사용
+    const imageSize = new kakao.maps.Size(23, 34); // 마커 이미지 크기 설정
+    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+    const markerInstance = new kakao.maps.Marker({
       position,
       image: markerImage,
     });
-    marker.setMap(map);
-    return marker;
+    markerInstance.setMap(map);
+    return markerInstance;
   };
 
   const removeMarkers = () => {
@@ -103,20 +89,36 @@ function Map({ keyword }) {
 
   // keyword 값 콘솔에 출력
   useEffect(() => {
-      console.log("Keyword:", keyword);
+    console.log("Keyword:", keyword);
   }, [keyword]); // keyword를 의존성 배열에 추가
 
   // 현재 위치로 이동
   const handleLocationClick = () => {
+    console.log('Current Location:', location);
     map.setCenter(new kakao.maps.LatLng(location.lat, location.lng));
   }
 
   return (
-      <div id="map">
-        <LocationIcon onClick={handleLocationClick} />
-      </div>
-      
+    <div id="map" style={{ width: '100%', height: '100%' }}>
+      <LocationIcon
+        onClick={handleLocationClick}
+        bottom={locationIconPosition?.bottom}
+        left={locationIconPosition?.left}
+      />
+    </div>
   );
 }
+
+const LocationIcon = styled.button`
+  width: 45px;
+  height: 45px;
+  background-image: url(${location});
+  background-size: cover;
+  background-color: transparent;
+  position: absolute;
+  bottom: ${(props) => props.bottom || '80px'};
+  left: ${(props) => props.left || '20px'};
+  z-index: 3;
+`;
 
 export default Map;

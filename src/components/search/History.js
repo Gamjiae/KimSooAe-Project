@@ -1,4 +1,4 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import close from '../../images/close.png'
 import place from '../../images/place.png'
@@ -8,41 +8,17 @@ const HeaderContainer = styled.div`
   padding: 16px;
 `
 
-const Title = styled.span`
-  left: 16px;
-  font-weight: 400;
-  font-size: 15px;
-  color: #666;
-`
-const RemoveText = styled.span`
-  float: right;
-  color: #a7a7a7;
-`
-
-const ListContainer = styled.ul`
-  padding: 0px;
-`
-
 // KeywordContainer에 flex 속성 추가
 const KeywordContainer = styled.li`
   display: flex;
   overflow: hidden;
-  height: 48px;
-  border-bottom: 2px solid #000;
+  height: 43px;
+  border-bottom: 1px solid #666;
   
   &:not(:last-child) {
     margin-bottom: 20px;
   }
 `
-
-const PlaceIcon = styled.div`
-  width: 23px;
-  height: 25px;
-  margin-left: 13px;
-  background-image: url(${place});
-  background-color: white;
-`
-
 const RemoveButton = styled.button`
   margin-left: auto; /* 오른쪽으로 붙임 */
   margin-right: 13px; /* 버튼과 PlaceIcon 사이 간격 */
@@ -60,6 +36,12 @@ const Keyword = styled.span`
 `
 
 function History({ keywords, onRemoveKeyword, onClearKeywords }) {
+  const navigate = useNavigate();
+  
+  const handleKeywordClick = (keyword) => {
+    navigate('/result', { state: {keyword} });
+  }
+
   console.log('keyword', keywords)
   if (keywords.length === 0) {
     return (<HeaderContainer>최근 검색된 기록이 없습니다.</HeaderContainer>)
@@ -67,22 +49,25 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
   return (
     <div>
       <HeaderContainer>
-        <Title>검색 기록</Title>
-        <RemoveText onClick={onClearKeywords}>전체삭제</RemoveText>
+        <span className='left-4 text-[15px] text-base flex-1 text-gray-500'>검색 기록</span>
+        <span className='float-right text-gray-500' onClick={onClearKeywords}>전체삭제</span>
       </HeaderContainer>
-      <ListContainer>
+      <ul className='p-0'>
         {keywords.map(({ id, text }) => {
           return (
-            <KeywordContainer key={id}>
-              <PlaceIcon />
-              <Keyword>{text}</Keyword>
+            <KeywordContainer key={id} onClick={() => handleKeywordClick(text)}>
+              <div 
+                className='w-[23px] h-[25px] ml-[13px] bg-white' 
+                style={{ backgroundImage: `url(${place})`}} 
+              />
+              <span className='ml-[30px] text-[17px] font-normal'>{text}</span>
               <RemoveButton onClick={() => {
                   onRemoveKeyword(id)
                 }} />
             </KeywordContainer>
           )
         })}
-      </ListContainer>
+      </ul>
     </div>
   )
 }

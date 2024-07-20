@@ -8,7 +8,7 @@ function MapPage() {
 
   return (
       <div className="app" style={{ position: 'relative', width: '100%', height: '100vh' }}>
-            <Map keyword={keyword} />
+            <Map keyword={keyword} locationIconPosition={{ bottom: '80px', left: '20px' }}/>
             <Search />
             <BottomNav />
       </div>
