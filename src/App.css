@@ -13,33 +13,3 @@ button {
   top: 0;
   left: 0;
 }
-
-/* App 컴포넌트 */
-.app {
-  height: 100%;
-  width: 100%;
-  position: relative
-}
-
-/* BottomNav 컴포넌트 */
-.bottom-nav {
-  z-index: 2;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: white;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
-.nav-button {
-  font-size: 12px;
-  cursor: pointer;
-  padding: 15px;
-}
-
-.nav-button:hover {
-  background-color: #FFD233;
-  transition: background-color 0.3s ease;
-}

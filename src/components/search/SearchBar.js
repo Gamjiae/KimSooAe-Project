@@ -1,10 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import back from '../../images/back.png';
 import remove from '../../images/remove.png';
 
 function SearchBar({ onAddKeyword, keyword, setKeyword }) {
-  const handleKeyword = (e) => setKeyword(e.target.value);
+  const navigate = useNavigate()
+
+  const handleKeyword = (e) => setKeyword(e.target.value)
   
   const handleEnter = (e) => {
     if (keyword && e.keyCode === 13) {
@@ -14,12 +15,12 @@ function SearchBar({ onAddKeyword, keyword, setKeyword }) {
 
   const handleClearKeyword = () => setKeyword('');
 
-  const hasKeyword = !!keyword;
+  const hasKeyword = !!keyword
   
   return (
-    <div className="flex items-center px-5 py-2.5 border-b-2 border-black">
-      <Link 
-        to="/" 
+    <div className="flex items-center px-5 py-2.5 border-b-[1px] border-gray-600">
+      <div 
+        onClick={() => navigate(-1)} 
         className="w-[9px] h-[17px] bg-cover mr-4" 
         style={{ backgroundImage: `url(${back})` }} 
       />

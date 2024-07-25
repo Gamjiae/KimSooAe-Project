@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Top = styled.div`
@@ -92,11 +92,12 @@ const Textarea = styled.textarea`
     margin-top: 10px
 `;
 
-function AddBookmarkPage() {
+function AddBookmarkPage({ name }) {
+    const location = useLocation();
+    const navigate = useNavigate();
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [selectedMenu, setSelectedMenu] = useState('폴더 선택');
-
-    const navigate = useNavigate()
+    const placeName = location.state?.name || '북마크';
 
     const handleDropdownToggle = () => {
         setDropdownVisible(!dropdownVisible);
@@ -110,12 +111,12 @@ function AddBookmarkPage() {
     return (
         <div>
             <Top>
-                <button onClick={() => navigate(-1)}>취소</button>
+                <button onClick={() => navigate(-1)}>X</button>
                 <Title>북마크 추가</Title>
                 <button onClick={() => navigate('/bookmark')}>완료</button>
             </Top>
             <Container>
-                <Name>북마크 이름</Name>
+                <Name>{placeName}</Name>
                 <ButtonContainer>
                     <DropBtn onClick={handleDropdownToggle}>
                         <span style={{color: '#666666'}}>{selectedMenu}</span>

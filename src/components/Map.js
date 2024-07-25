@@ -100,7 +100,7 @@ function Map({ keyword, onPlacesChange, locationIconPosition }) {
 
   return (
     <div id="map" style={{ width: '100%', height: '100%' }}>
-      <LocationIcon
+      <LocationIcon 
         onClick={handleLocationClick}
         bottom={locationIconPosition?.bottom}
         left={locationIconPosition?.left}

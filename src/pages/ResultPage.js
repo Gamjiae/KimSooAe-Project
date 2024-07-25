@@ -3,123 +3,30 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useKeyword } from '../context/KeywordContext';
 import { useKeywords } from '../context/KeywordsContext';
 import Map from '../components/Map';
-import styled from 'styled-components';
 import backImg from '../images/back.png';
 import closeImg from '../images/close.png';
+import { RiErrorWarningLine } from 'react-icons/ri'; // 오류 아이콘 추가
+import { MdOutlineBookmarkAdd } from "react-icons/md";
 
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  background-color: white;
-  align-items: center;
-  padding: 10px 20px;
-  z-index: 3;
-`;
-
-const ArrowIcon = styled.button`
-  width: 9px;
-  height: 17px;
-  background-image: url(${backImg});
-  background-size: contain;
-  background-color: white;
-  margin-right: 16px;
-`;
-
-const Input = styled.input`
-  flex: 1;
-  background-color: #fff;
-  font-weight: 700;
-  font-size: 17px;
-  box-sizing: border-box;
-  border: none;
-  outline: none;
-`;
-
-const CloseIcon = styled.button`
-  width: 13px;
-  height: 13px;
-  background-image: url(${closeImg});
-  background-color: white;
-`;
-
-const ResultsContainer = styled.div`
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  max-height: 50%;
-  overflow-y: auto;
-  background-color: white;
-  z-index: 2;
-`;
-
-const ResultItem = styled.div`
-  display: flex;
-  justify-content: space-between; /* 제목과 버튼을 양 끝으로 배치 */
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-`;
-const ResultDetails = styled.div`
-  flex: 1; /* 제목과 주소가 가능한 최대 공간을 차지하게 함 */
-`;
-const AddButton = styled.button`
-  background-color: #007bff; /* 버튼 색상 설정 */
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
-
-  &:hover {
-    background-color: #0056b3; /* 버튼 호버 색상 설정 */
-  }
-`;
 function ResultPage() {
   const { keyword, setKeyword } = useKeyword();
   const { keywords, setKeywords } = useKeywords();
-  const [places, setPlaces] = useState([]);
+  const [places, setPlaces] = useState([]); // 검색 결과
   const [locationIconBottom, setLocationIconBottom] = useState('80px'); 
-  const resultsContainerRef = useRef(null); // ResultContainer의 높이를 구하기 위함 
+  const resultsContainerRef = useRef(null); // 결과 컨테이너의 높이를 가져오기 위함
   const location = useLocation();
   const stateKeyword = location.state?.keyword || '';
   const navigate = useNavigate(); 
 
   useEffect(() => {
     if (stateKeyword) {
-      setKeyword(stateKeyword); // 전달된 keyword로 상태 업데이트
+      setKeyword(stateKeyword);
     }
   }, [stateKeyword, setKeyword]);
 
   useEffect(() => {
     localStorage.setItem('keywords', JSON.stringify(keywords));
   }, [keywords]);
-
-  const handleKeyword = (e) => setKeyword(e.target.value);
-
-  const handleEnter = (e) => {
-    if (keyword && e.keyCode === 13) {
-      onAddKeyword(keyword);
-    }
-  };
-
-  const onAddKeyword = (text) => {
-    const newKeyword = {
-      id: Date.now(),
-      text: text,
-    };
-    setKeywords([newKeyword, ...keywords]);
-  };
-
-  const handleBackClick = () => {
-    setKeyword('');
-    navigate(-1);
-  };
-
-  const handleCloseClick = () => {
-    setKeyword('');
-    navigate('/');
-  };
 
   const handlePlacesChange = (places) => {
     setPlaces(places);
@@ -134,31 +41,53 @@ function ResultPage() {
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
-      <Container>
-        <ArrowIcon onClick={handleBackClick} />
-        <Input
-          placeholder="장소 검색"
+      <div className='relative flex bg-white items-center p-[10px] px-[20px] z-30'>
+        <button 
+          className='w-[9px] h-[17px] bg-contain bg-white mr-4'
+          style={{backgroundImage: `url(${backImg})`}} 
+          onClick={() => {setKeyword(''); navigate(-1);}} />
+        <input
+          className='flex-1 bg-white font-bold text-lg box-border border-none outline-none'
           onClick={() => navigate('/search')}
           value={keyword}
+          onChange={(e) => setKeyword(e.target.value)}
         />
-        <CloseIcon onClick={handleCloseClick} />
-      </Container>
+        <button
+          className='w-[13px] h-[13px] bg-white'
+          style={{backgroundImage: `url(${closeImg})`}} 
+          onClick={() => {setKeyword(''); navigate('/');}} />
+      </div>
       <Map
         keyword={keyword}
         onPlacesChange={handlePlacesChange}
         locationIconPosition={{ bottom: locationIconBottom, left: '20px' }}
       />
-      <ResultsContainer ref={resultsContainerRef}>
-        {places.map((place) => (
-          <ResultItem key={place.id}>
-            <ResultDetails>
-              <h4>{place.place_name}</h4>
-              <p>{place.road_address_name || place.address_name}</p>
-            </ResultDetails>
-            <AddButton onClick={() => navigate('/addbookmark')}>추가</AddButton>
-          </ResultItem>
-        ))}
-      </ResultsContainer>
+      <div
+        className='absolute bottom-0 w-full h-full max-h-80 overflow-y-auto bg-white z-20' 
+        ref={resultsContainerRef}>
+        {places.length === 0 ? (
+          <div className='flex flex-col justify-center items-center h-full'>
+            <RiErrorWarningLine size={48} color='#9ca3af'/>
+            <span>검색 결과가 없습니다.</span>
+          </div>
+        ) : (
+          places.map((place) => (
+            <div className='flex justify-between items-center p-[10px] border-b border-b-gray-600' key={place.id}>
+              <div className='flex flex-col'>
+                <span className='text-base font-medium mb-1'>{place.place_name}</span>
+                <span className='text-xs text-gray-600'>{place.road_address_name || place.address_name}</span>
+                <hr />
+              </div>
+              <button 
+                className='flex bg-[#028af2] color text-white border-none p-[5px] px-[10px] rounded cursor-pointer text-sm hover:bg-blue-700 pr-1 pl-1'
+                onClick={() => navigate('/addbookmark', {state: {name: place.place_name}})} >
+                  추가
+                  <MdOutlineBookmarkAdd className='w-[19px] h-[19px] ml-1'/>
+              </button>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 }

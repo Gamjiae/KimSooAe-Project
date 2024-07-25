@@ -7,10 +7,10 @@ function MapPage() {
   const { keyword } = useKeyword();
 
   return (
-      <div className="app" style={{ position: 'relative', width: '100%', height: '100vh' }}>
-            <Map keyword={keyword} locationIconPosition={{ bottom: '80px', left: '20px' }}/>
-            <Search />
-            <BottomNav />
+      <div className="h-full w-full relative">
+        <Map keyword={keyword} locationIconPosition={{ bottom: '80px', left: '20px' }}/>
+        <Search />
+        <BottomNav />
       </div>
   );
 }
