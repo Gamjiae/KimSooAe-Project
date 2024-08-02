@@ -40,8 +40,8 @@ function ResultPage() {
   }, [places]);
 
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <div className='relative flex bg-white items-center p-[10px] px-[20px] z-30'>
+    <div className='w-full h-full'>
+      <div className='relative flex bg-white items-center p-[10px] px-[20px] shadow-md shadow-neutral-400 z-30'>
         <button 
           className='w-[9px] h-[17px] bg-contain bg-white mr-4'
           style={{backgroundImage: `url(${backImg})`}} 
@@ -63,7 +63,7 @@ function ResultPage() {
         locationIconPosition={{ bottom: locationIconBottom, left: '20px' }}
       />
       <div
-        className='absolute bottom-0 w-full h-full max-h-80 overflow-y-auto bg-white z-20' 
+        className='absolute bottom-0 w-full h-full max-h-80 overflow-y-aut bg-white rounded-t-2xl z-20' 
         ref={resultsContainerRef}>
         {places.length === 0 ? (
           <div className='flex flex-col justify-center items-center h-full'>
@@ -71,21 +71,25 @@ function ResultPage() {
             <span>검색 결과가 없습니다.</span>
           </div>
         ) : (
-          places.map((place) => (
-            <div className='flex justify-between items-center p-[10px] border-b border-b-gray-600' key={place.id}>
-              <div className='flex flex-col'>
-                <span className='text-base font-medium mb-1'>{place.place_name}</span>
-                <span className='text-xs text-gray-600'>{place.road_address_name || place.address_name}</span>
-                <hr />
-              </div>
-              <button 
-                className='flex bg-[#028af2] color text-white border-none p-[5px] px-[10px] rounded cursor-pointer text-sm hover:bg-blue-700 pr-1 pl-1'
-                onClick={() => navigate('/addbookmark', {state: {name: place.place_name}})} >
-                  추가
-                  <MdOutlineBookmarkAdd className='w-[19px] h-[19px] ml-1'/>
-              </button>
+          <>
+            <div className='p-[10px] bg-gray-100 text-gray-500 text-sm'>
+              검색 결과 {places.length}개
             </div>
-          ))
+            {places.map((place) => (
+              <div className='flex justify-between items-center p-[10px] border-b border-b-gray' key={place.id}>
+                <div className='flex flex-col'>
+                  <span className='text-base font-medium mb-1'>{place.place_name}</span>
+                  <span className='text-xs text-gray-600 border-b border-b-gray'>{place.road_address_name || place.address_name}</span>
+                </div>
+                <button 
+                  className='flex bg-[#028af2] color text-white border-none p-[5px] px-[10px] rounded cursor-pointer text-sm hover:bg-blue-700 pr-1 pl-1'
+                  onClick={() => navigate('/addbookmark', {state: {name: place.place_name}})} >
+                    추가
+                    <MdOutlineBookmarkAdd className='w-[19px] h-[19px] ml-1'/>
+                </button>
+              </div>
+            ))}
+          </>
         )}
       </div>
     </div>

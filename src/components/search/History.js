@@ -27,7 +27,7 @@ function History({ keywords, onRemoveKeyword, onClearKeywords }) {
         {keywords.map(({ id, text }) => {
           return (
             <li
-              className='flex overflow-hidden h-[43px] border-b border-gray-600 mb-5 last:mb-0'
+              className='flex overflow-hidden h-[43px] border-b border-gray mb-5 last:mb-0'
               key={id}>
               <div
                 className='w-[25px] h-[27px] bg-cover ml-[13px]' 

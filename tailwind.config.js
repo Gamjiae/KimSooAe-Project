@@ -1,12 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  mode: "jit",
   content: [
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
     extend: {
       colors: {
-        'my-color': '#028AF2',
+        'blue': '#028AF2',
+        'lightBlue': '#D1EAFD',
+        'gray': '#D9D9D9',
+        '666': '#666666'
+      },
+      fontSize: {
+        '15px': '15px',
       },
     },
   },

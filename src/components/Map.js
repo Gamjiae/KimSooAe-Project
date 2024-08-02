@@ -71,9 +71,9 @@ function Map({ keyword, onPlacesChange, locationIconPosition }) {
 
   // 마커 생성, 지도 위에 마커 표시
   const createMarker = (position, map) => {
-    const imageSrc = marker; // 새로운 마커 이미지 사용
-    const imageSize = new kakao.maps.Size(23, 34); // 마커 이미지 크기 설정
-    const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
+    // const imageSrc = marker; // 새로운 마커 이미지 사용
+    // const imageSize = new kakao.maps.Size(23, 34); // 마커 이미지 크기 설정
+    const markerImage = new kakao.maps.MarkerImage(marker, new kakao.maps.Size(25, 34));
     const markerInstance = new kakao.maps.Marker({
       position,
       image: markerImage,

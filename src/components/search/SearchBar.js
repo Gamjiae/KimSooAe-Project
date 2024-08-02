@@ -18,7 +18,7 @@ function SearchBar({ onAddKeyword, keyword, setKeyword }) {
   const hasKeyword = !!keyword
   
   return (
-    <div className="flex items-center px-5 py-2.5 border-b-[1px] border-gray-600">
+    <div className="flex items-center px-5 py-2.5 border-b-[1px] border-gray">
       <div 
         onClick={() => navigate(-1)} 
         className="w-[9px] h-[17px] bg-cover mr-4" 

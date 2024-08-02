@@ -13,3 +13,124 @@ button {
   top: 0;
   left: 0;
 }
+
+input::placeholder {
+  color: #737373;
+}
+
+input::-webkit-input-placeholder {
+  color: #737373;
+}
+
+/* select {
+  height: 50px; 
+  border-bottom: 1px solid #D9D9D9;
+  background-image: url("./images/toggle.png");
+  background-repeat: no-repeat;
+  background-position: right 10px center; background-size: 24px;
+  padding-right: 30px;
+  -o-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+select option {
+  background: #D9D9D9;
+  
+} */
+
+// selectBox2와 하위요소까지 border-box 적용
+.selectBox2 * {
+  box-sizing: border-box;
+}
+
+.selectBox2 {
+  position: relative;
+  height: 50px;
+  border-bottom: 1px solid #D9D9D9;
+  background: url('./images/toggle.png') calc(100% - 7px) center no-repeat;
+  background-size: 20px;
+  cursor: pointer;
+}
+
+// 가상 요소로 마지막 요소 생성
+.selectBox2:after {
+  content: '';
+  display: block; 
+  width: 2px;
+  height: 100%; 
+  position: absolute; 
+  top: 0; 
+  right: 35px;
+  background: lightcoral;
+}
+
+.selectBox2 .label {
+  display: flex;
+  align-items: center;
+  width: inherit;
+  height: inherit;
+  border: 0 none;
+  outline: 0 none;
+  color: #808080;
+  background: transparent;
+  cursor: pointer;
+}
+
+.selectBox2.active .label,
+.selectBox2 .label.has-selection {
+  color: black; /* 선택 후 텍스트 색상 */
+}
+
+.selectBox2 .optionList {
+  position: absolute; 
+  top: calc(100% + 5px);
+  left: 0;
+  width: 100%;
+  background: #F3F4F6;
+  color: #000;
+  list-style-type: none;
+  padding: 0;
+  border-radius: 6px;
+  overflow: hidden;
+  max-height: 0;
+  transition: .3s ease-in;
+}
+
+.selectBox2.active .optionList {
+  max-height: 500px;
+}
+
+.selectBox2 .optionItem {
+  border-bottom: 1px solid #D9D9D9;
+  padding: 5px 15px;
+  transition: .1s;
+}
+
+.selectBox2 .optionItem:hover {
+  background: #028AF2; /* 마우스를 올렸을 때 배경색 변경 */
+  color: #fff; /* 텍스트 색상 변경 */
+}
+
+.selectBox2 .optionItem:last-child {
+  border-bottom: 0 none;
+}
+
+// 스크롤 커스텀
+.selectBox2 .optionList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.selectBox2 .optionList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.selectBox2 .optionList::-webkit-scrollbar-thumb {
+  background: #303030;
+  border-radius: 45px;
+}
+
+.selectBox2 .optionList::-webkit-scrollbar-thumb:hover {
+  background: #303030;
+}
