@@ -1,7 +1,42 @@
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function SignUp () {
-    const navigate = useNavigate()
+function SignUp() {
+    const [id, setId] = useState('');
+    const [pw, setPw] = useState('');
+    const [email, setEmail] = useState('');
+
+    const navigate = useNavigate();
+
+    const submit = async () => {
+        if (id === '' || pw === '') {
+            alert("아이디 또는 비밀번호를 입력해주시기 바랍니다");
+            return;
+        } else {
+            try {
+                const res = await fetch('http://localhost:5000/api/signup', {
+                    method: 'POST',
+                    body: JSON.stringify({ userID: id, userPW: pw, userEmail: email }),
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                const data = await res.json();
+
+                alert(data.message || '회원가입 성공');
+                if (res.status === 201) {
+                    navigate('/signupsuccess');
+                } else {
+                    setId('');
+                    setPw('');
+                    setEmail('');
+                    return;
+                }
+            } catch (err) {
+                console.log(err);
+                alert('회원가입 중 오류가 발생했습니다. 다시 시도해 주세요.');
+            }
+        }
+    }
 
     return (
         <div>
@@ -9,12 +44,35 @@ function SignUp () {
                 회원가입
             </span>
             <div className='absolute top-[152px] flex flex-col w-full items-center'>
-                <input type='text' placeholder='   아이디' className='w-5/6 h-[47px] mb-[14px] border border-black' />
-                <input type='password' placeholder='   비밀번호' className='w-5/6 h-[47px] mb-[14px] border border-black' />
-                <input type='password' placeholder='   이메일주소' className='w-5/6 h-[47px] mb-[14px] border border-black' />
-                <button className="w-5/6 h-[27px] mb-[60px] bg-gray-200">인증받기</button>
-
-                <button className="w-5/6 h-[47px] bg-my-color text-white font-semibold text-xl" onClick={() => navigate('/signupsuccess')}>
+                <input
+                    type='text'
+                    value={id}
+                    onChange={(e) => setId(e.target.value)}
+                    placeholder='   아이디'
+                    className='w-5/6 h-[47px] mb-[14px] border border-gray rounded-lg'
+                    aria-label='아이디'
+                />
+                <input
+                    type='password'
+                    value={pw}
+                    onChange={(e) => setPw(e.target.value)}
+                    placeholder='   비밀번호'
+                    className='w-5/6 h-[47px] mb-[14px] border border-gray rounded-lg'
+                    aria-label='비밀번호'
+                />
+                <input
+                    type='email'
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder='   이메일 주소'
+                    className='w-5/6 h-[47px] mb-[14px] border border-gray rounded-lg'
+                    aria-label='이메일 주소'
+                />
+                <button
+                    type='submit'
+                    className="w-5/6 h-[47px] bg-blue text-white font-semibold text-xl rounded-md"
+                    onClick={submit}
+                >
                     회원가입
                 </button>
             </div>
@@ -22,4 +80,4 @@ function SignUp () {
     )
 }
 
-export default SignUp
+export default SignUp;
