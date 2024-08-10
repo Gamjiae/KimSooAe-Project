@@ -1,12 +1,17 @@
-import BottomNav from "../components/BottomNav"
+import '../a.css';
+import Map from '../components/Map';
+import Folder from '../components/Folder';
+import BottomNav from '../components/BottomNav';
+
 
 function BookmarkPage() {
-    return(
-        <div>
-            <h1>북마크 목록</h1>
-            <BottomNav />
-        </div>
-    )
+  return (
+    <div className="w-full h-full">
+      <Map />
+      <Folder />
+      <BottomNav />
+    </div>
+  );
 }
 
-export default BookmarkPage
+export default BookmarkPage;

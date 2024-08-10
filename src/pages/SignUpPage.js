@@ -23,7 +23,7 @@ function SignUp() {
                 const data = await res.json();
 
                 alert(data.message || '회원가입 성공');
-                if (res.status === 201) {
+                if (res.status === 200) {
                     navigate('/signupsuccess');
                 } else {
                     setId('');

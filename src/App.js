@@ -13,12 +13,14 @@ import LogInPage from './pages/LogInPage'
 import WelcomePage from './pages/WelcomePage'
 import SignUpPage from './pages/SignUpPage'
 import SignUpSuccessPage from './pages/SignUpSuccessPage'
+import SignOutPage from './pages/SignOutPage'
 import FreeBoard from './pages/FreeBoard'
 import ShareBoard from './pages/ShareBoard'
 import RecommendBoard from './pages/RecommendBoard'
 import BestBoard from './pages/BestBoard'
 import AddPostPage from './pages/AddPostPage'
 import PostPage from './pages/PostPage'
+import CreateFolder from './components/CreateFolder'
 
 function App() {
   return (
@@ -31,6 +33,7 @@ function App() {
             <Route path="/addbookmark" element={<AddBookmarkPage />} />
             <Route path="/result" element={<ResultPage />} />
             <Route path="/bookmark" element={<BookmarkPage />} />
+            <Route path="/bookmark/create" element={<CreateFolder />} />
             <Route path="/community" element={<CommunityPage />} />
             <Route path="/community/add" element={<AddPostPage />} />
             <Route path="/community/post" element={<PostPage />} />
@@ -43,6 +46,7 @@ function App() {
             <Route path="/welcome" element={<WelcomePage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="/signupsuccess" element={<SignUpSuccessPage />} />
+            <Route path="/signout" element={<SignOutPage />} />
           </Routes>
         </BrowserRouter>
       </KeywordsProvider>

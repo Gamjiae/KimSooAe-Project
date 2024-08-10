@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import BottomNav from "../components/BottomNav"
 import profile from '../images/profile.png'
 import toggle from '../images/toggle(2).png'
@@ -7,8 +7,17 @@ import toggle from '../images/toggle(2).png'
 function MyPage() {
     const [isToggled, setIsToggled] = useState(false);
 
+    const navigate = useNavigate();
+
     const handleToggle = () => {
         setIsToggled(!isToggled);
+    };
+
+    const handleLogoutClick = () => {
+        if (window.confirm('로그아웃 하시겠습니까?')) {
+            alert('로그아웃 되었습니다.');
+            setTimeout(() => navigate('/login'), 100); // 딜레이 안주면 이동 안함
+        } 
     };
 
     return (
@@ -27,14 +36,14 @@ function MyPage() {
             <button className="absolute top-[115px] mt-[9px] bg-stone-200 w-11/12 mx-auto left-0 right-0">프로필 수정</button>
 
             <div className="absolute top-[177px] w-full flex flex-col space-y-4">
-                <hr className="border-gray-300" />
+                <hr className="border-gray" />
                 <div className="flex flex-col ml-[26px] space-y-4">
                     <span className="font-semibold">활동 관리</span>
                     <Link>댓글 관리</Link>
                     <Link>게시글 관리</Link>
                 </div>
 
-                <hr className="border-gray-300" />
+                <hr className="border-gray" />
                 <div className="flex flex-col ml-[26px] space-y-4">
                     <span className="font-semibold">설정</span>
                     <Link>계정 관리</Link>
@@ -49,11 +58,11 @@ function MyPage() {
                     </div>
                 </div>
 
-                <hr className="border-gray-300" />
-                <div className="flex flex-col ml-[26px] space-y-4">
+                <hr className="border-gray" />
+                <div className="flex flex-col items-start ml-[26px] space-y-4">
                     <span className="font-semibold">계정 관리</span>
-                    <Link>로그아웃</Link>
-                    <Link>탈퇴하기</Link>
+                    <button onClick={handleLogoutClick}>로그아웃</button>
+                    <button onClick={() => navigate('/signout')}>탈퇴하기</button>
                 </div>
             </div>
             <BottomNav />

@@ -44,7 +44,7 @@ const BottomNav = () => {
   const currentPath = location.pathname;
 
   return (
-    <div className="fixed bottom-0 w-full bg-white flex justify-around items-center z-10">
+    <div className="fixed bottom-0 w-full h-[55px] bg-white flex justify-around items-center z-10">
       <Btn onClick={() => navigate('/')} active={currentPath === '/'}>
         <div />
         <img src={map} alt="지도" />

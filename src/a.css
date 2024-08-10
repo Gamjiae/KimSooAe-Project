@@ -1,0 +1,313 @@
+.App {
+  text-align: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background-color: #f0f0f0;
+  overflow: hidden; /* 화면 넘침 방지 */
+}
+
+.iphone-15-screen {
+  background-color: white;
+  width: 100%;
+  height: 66.67%;
+  max-width: 1179px;
+  max-height: 2556px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 24px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  transition: height 0.3s ease;
+}
+
+.top-bar {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: -20px;
+  cursor: pointer;
+  user-select: none; /* 텍스트 선택 방지 */
+}
+
+.top-bar-handle {
+  width: 60px;
+  height: 5px;
+  background-color: gray;
+  border-radius: 2.5px;
+  position: absolute;
+  top: 10px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.folder-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 30px;
+  font-size: 16px;
+  padding: 0 30px;
+  color: rgba(128, 128, 128, 0.946);
+}
+
+.cancel-icon {
+  cursor: pointer;
+  font-size: 18px;
+  color: rgba(128, 128, 128, 0.946);
+  margin-left: 10px;
+}
+
+.create-folder { /* 새 폴더 생성 */
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  margin-left: 20px;
+  cursor: pointer;
+  color: gray;
+}
+
+.create-folder-icon { /* 플러스 버튼 */
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 2px solid #028af2;
+  border-radius: 50%;
+  color: #028af2;
+  font-size: 26px;
+  line-height: 20px;
+  margin-right: 16px;
+  margin-left: 7px;
+  text-align: center; /* 플러스 기호를 가운데로 정렬 */
+  vertical-align: middle; /* 플러스 기호를 가운데로 정렬 */
+}
+
+.create-folder-input { /* 새폴더이름입력 */
+  display: flex;
+  align-items: center;
+  margin-left: 66px;
+  font-size: 18px;
+  margin-top: -31.5px;
+  width: calc(100% - 90px); /* 전체 너비에서 왼쪽 여백 60px과 오른쪽 여백 10px를 뺀 너비 */
+  color: gray;
+}
+
+.folder-input { /* 새폴더이름입력창 */
+  width: calc(120% + 50px); /* 좌우 여백을 고려한 너비 */
+  padding: 5px;
+  font-size: 18px;
+  box-sizing: border-box;
+  height: 36px; /* 입력창 높이 설정 */
+  border: none; /* 테두리 제거 */
+  border-bottom: 1.3px solid gray; /* 아래쪽 테두리만 추가 */
+}
+
+.additional-options { /* 폴더 생성시 회색 배경 네모 칸*/
+  width: calc(100% - 70px); /* 좌우 여백을 고려한 너비 */
+  height: calc(100vh - 282px); /* 유동형 높이 설정 */
+  background-color: #ffffff;
+  padding: 20px;
+  margin: 20px 0;
+  margin-left: 15px;
+}
+
+.option { /*색상선택,이모티콘선택,폴더비공개,메모*/
+  margin-bottom: 30px;
+  font-size: 18px;
+  color: gray;
+  text-align: left; /* 왼쪽 정렬 */
+}
+
+.option-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.dropdown-button { /*색상 선택버튼*/
+  width: 50px;
+  height: 23px;
+  background-color: #a3a3a3;
+  border-radius: 20px;
+  position: relative;
+  margin-top: -30px;
+}
+
+.dropdown-button::after {
+  content: '▼'; /* 텍스트 콘텐츠를 '▼'로 설정 */
+  position: absolute;
+  right: 7px;
+  top: 49%;
+  transform: translateY(-50%);
+  color: white; /* 텍스트 색상을 하얀색으로 설정 */
+  font-size: 12px; /* 필요에 따라 글꼴 크기 조정 */
+  display: inline-block;
+}
+
+.toggle-switch { /*비공개폴더온오프*/
+  margin-top: -35px;
+  position: relative;
+  width: 40px;
+  height: 20px;
+  background-color: gray;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+  
+.toggle-switch.active {
+  background-color: #028af2;
+}
+  
+.toggle-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+  
+.toggle-switch.active .toggle-thumb {
+  transform: translateX(20px);
+}
+
+.note-box { /* 메모 흰 네모 칸 */
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 4px;
+  margin-top: -20px;
+  font-size: 16px;
+}
+
+.add-folder-button { /* 완료 버튼 */
+  width: calc(100% - 40px); /* 좌우 여백을 고려한 너비 */
+  padding: 10px 20px;
+  font-size: 18px;
+  margin: 10px 20px;
+  cursor: pointer;
+  background-color: #028af2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  height: 38px; /* 버튼 높이 설정 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 10px;
+  left: 0%;
+  transform: translateX(0%); /* 가운데 정렬 */
+}
+
+.add-folder-button::before { /*완료버튼위 회색실선*/
+  content: '';
+  position: absolute;
+  top: -20px;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  margin-left: -20px; /* 중앙 정렬을 위해 추가 */
+  border-top: 0.1px solid #e7e7e7; /* 회색 실선 */
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3); /* 그림자 추가 */
+}
+
+.add-folder-button:hover {
+  background-color: #0056b3;
+}
+
+.folder-list {
+  width: calc(100% - 43px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  position: relative;
+}
+
+.folder-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 10px; /* 오른쪽에서 10px 떨어뜨림 */
+  border-bottom: 1px solid #e0e0e0; /* 회색 실선 */
+}
+
+.folder-icon {
+  width: 30px;
+  height: 30px;
+  background-color: #d0d0d0;
+  border-radius: 50%;
+  margin-right: 15px;
+  margin-left: -2px;
+  margin-bottom: 2px;
+}
+
+.folder-emoji {
+  z-index: 1;
+  width: 23px;
+  height: 23px;
+  position: relative;
+  margin-top: 3px;
+}
+
+.folder-name {
+  font-size: 18px;
+  color: #333;
+}
+
+.more-options { /*... 폴더더보기*/
+  color: #959595;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: auto; /* 자동으로 왼쪽 마진을 설정하여 오른쪽으로 이동 */
+  padding-right: 0px; /* 오른쪽에 10px 여백 추가 */
+  }
+
+.more-options-menu {
+  position: absolute;
+  top: 30px;
+  right: 10px;
+  background-color: white;
+  border: 1px solid #ebebeb;
+  border-radius: 4px;
+  box-shadow: 0px 2px 5px rgba(97, 97, 97, 0.15);
+  z-index: 10;
+}
+    
+.more-options-item {
+  padding: 10px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+}
+    
+.more-options-item:hover {
+  background-color: #f0f0f0;
+}
